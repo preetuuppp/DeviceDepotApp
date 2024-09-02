@@ -82,7 +82,7 @@ const Product = ({ items, cart, setCart }) => {
                               product.imgSrc
                             )
                           }
-                          className="btn btn-warning"
+                          className="btn btn-warning text-white"
                         >
                           Add To Cart
                         </button>

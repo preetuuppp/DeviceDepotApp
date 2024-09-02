@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { items } from "./Data";
 import { BsFillCartCheckFill } from "react-icons/bs";
-
+import Logo from "../assets/Logo.jpeg";
 const Navbar = ({ setData, cart }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,7 +45,13 @@ const Navbar = ({ setData, cart }) => {
       <header className="sticky-top">
         <div className="nav-bar">
           <Link to={"/"} className="brand">
-            DeviceDepot
+            <img
+              src={Logo}
+              alt="logo"
+              width={50}
+              height={50}
+              className="rounded-circle"
+            />
           </Link>
 
           <form onSubmit={handleSubmit} className="search-bar">
@@ -70,7 +76,7 @@ const Navbar = ({ setData, cart }) => {
       </header>
       {location.pathname === "/" && (
         <div className="nav-bar-wrapper">
-          <h5>Filter By</h5>
+          <h5 className="text-white">Filter By</h5>
           <select
             value={filter}
             onChange={handleFilterChange}
