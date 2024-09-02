@@ -4,20 +4,34 @@ import { items } from "./Data";
 import { BsFillCartCheckFill } from "react-icons/bs";
 
 const Navbar = ({ setData, cart }) => {
-  // console.log(useLocation())
   const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("");
 
   const filterByCategory = (category) => {
-    const element = items.filter((product) => product.category === category);
-    // console.log(element)
-    setData(element);
+    const filteredItems = items.filter(
+      (product) => product.category === category
+    );
+    setData(filteredItems);
   };
 
   const filterByPrice = (price) => {
-    const element = items.filter((product) => product.price >= price);
-    setData(element);
+    const filteredItems = items.filter((product) => product.price >= price);
+    setData(filteredItems);
+  };
+
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    setFilter(value);
+
+    if (value === "no-filter") {
+      setData(items);
+    } else if (["mobiles", "laptops", "tablets"].includes(value)) {
+      filterByCategory(value);
+    } else if (["29999", "49999", "69999", "89999"].includes(value)) {
+      filterByPrice(parseInt(value, 10));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -34,11 +48,7 @@ const Navbar = ({ setData, cart }) => {
             DeviceDepot
           </Link>
 
-          <form
-            // onClick={handleSubmit}
-            onSubmit={handleSubmit}
-            className="search-bar"
-          >
+          <form onSubmit={handleSubmit} className="search-bar">
             <input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -58,6 +68,25 @@ const Navbar = ({ setData, cart }) => {
           </Link>
         </div>
       </header>
+      {location.pathname === "/" && (
+        <div className="nav-bar-wrapper">
+          <h5>Filter By</h5>
+          <select
+            value={filter}
+            onChange={handleFilterChange}
+            className="filter-select"
+          >
+            <option value="no-filter">All</option>
+            <option value="mobiles">Mobiles</option>
+            <option value="laptops">Laptops</option>
+            <option value="tablets">Tablets</option>
+            <option value="29999">{">="}29999</option>
+            <option value="49999">{">="}49999</option>
+            <option value="69999">{">="}69999</option>
+            <option value="89999">{">="}89999</option>
+          </select>
+        </div>
+      )}
     </>
   );
 };
